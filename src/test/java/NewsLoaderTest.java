@@ -1,10 +1,12 @@
 import edu.iis.mto.staticmock.ConfigurationLoader;
 import edu.iis.mto.staticmock.NewsReaderFactory;
+import edu.iis.mto.staticmock.reader.NewsReader;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import static org.mockito.Matchers.any;
 import static org.powermock.api.mockito.PowerMockito.*;
 
 /**
@@ -16,9 +18,14 @@ import static org.powermock.api.mockito.PowerMockito.*;
 public class NewsLoaderTest {
 
     @Before
-    public void test() {
+    public void setUp() {
         mockStatic(ConfigurationLoader.class, NewsReaderFactory.class);
         ConfigurationLoader configurationLoader = mock(ConfigurationLoader.class);
         when(ConfigurationLoader.getInstance()).thenReturn(configurationLoader);
+
+        NewsReader newsReader = mock(NewsReader.class);
+
+        NewsReaderFactory newsReaderFactory = mock(NewsReaderFactory.class);
+        when(NewsReaderFactory.getReader(any(String.class))).thenReturn(newsReader);
     }
 }
