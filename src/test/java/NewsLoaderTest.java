@@ -10,17 +10,10 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import static org.mockito.Matchers.any;
 import static org.powermock.api.mockito.PowerMockito.*;
 
-/**
- * Created by Wojciech Szczepaniak on 28.03.2017.
- */
-
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({ConfigurationLoader.class, NewsReaderFactory.class, PublishableNews.class})
 public class NewsLoaderTest {
 
-    private ConfigurationLoader configurationLoader;
-    private NewsReaderFactory newsReaderFactory;
-    private PublishableNews publishableNews;
     private IncomingNews incomingNews;
 
 
@@ -31,7 +24,7 @@ public class NewsLoaderTest {
         Configuration configuration = mock(Configuration.class);
         when(configuration.getReaderType()).thenReturn("");
 
-        configurationLoader = mock(ConfigurationLoader.class);
+        ConfigurationLoader configurationLoader = mock(ConfigurationLoader.class);
         when(ConfigurationLoader.getInstance()).thenReturn(configurationLoader);
         when(configurationLoader.loadConfiguration()).thenReturn(configuration);
 
@@ -40,7 +33,6 @@ public class NewsLoaderTest {
         NewsReader newsReader = mock(NewsReader.class);
         when(newsReader.read()).thenReturn(incomingNews);
 
-        newsReaderFactory = mock(NewsReaderFactory.class);
         when(NewsReaderFactory.getReader(any(String.class))).thenReturn(newsReader);
 
         when(PublishableNews.create()).thenReturn(new PublishableNewsViewer());
