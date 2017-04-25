@@ -15,17 +15,18 @@ import static org.powermock.api.mockito.PowerMockito.*;
  */
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ConfigurationLoader.class, NewsReaderFactory.class})
+@PrepareForTest({ConfigurationLoader.class, NewsReaderFactory.class, PublishableNews.class})
 public class NewsLoaderTest {
 
     private ConfigurationLoader configurationLoader;
     private NewsReaderFactory newsReaderFactory;
+    private PublishableNews publishableNews;
     private IncomingNews incomingNews;
 
 
     @Before
     public void setUp() {
-        mockStatic(ConfigurationLoader.class, NewsReaderFactory.class);
+        mockStatic(ConfigurationLoader.class, NewsReaderFactory.class, PublishableNews.class);
 
         Configuration configuration = mock(Configuration.class);
         when(configuration.getReaderType()).thenReturn("");
@@ -41,15 +42,22 @@ public class NewsLoaderTest {
 
         newsReaderFactory = mock(NewsReaderFactory.class);
         when(NewsReaderFactory.getReader(any(String.class))).thenReturn(newsReader);
+
+        when(PublishableNews.create()).thenReturn(new PublishableNewsViewer());
     }
 
     @Test
     public void validateSplitingNews() {
         // given
         NewsLoader newsLoader = new NewsLoader();
+        incomingNews.add(new IncomingInfo("Test 1", SubsciptionType.A));
+        incomingNews.add(new IncomingInfo("Test 2", SubsciptionType.B));
+        incomingNews.add(new IncomingInfo("Test 3", SubsciptionType.C));
+        incomingNews.add(new IncomingInfo("Test 4", SubsciptionType.NONE));
 
         // when
         PublishableNews news = newsLoader.loadNews();
+        Assert.assertTrue(news.getClass().getName().equals(PublishableNewsViewer.class.getName()));
 
         // then
         //Assert.assertThat(news.);
