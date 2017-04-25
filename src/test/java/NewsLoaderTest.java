@@ -60,6 +60,9 @@ public class NewsLoaderTest {
         Assert.assertTrue(news.getClass().getName().equals(PublishableNewsViewer.class.getName()));
 
         // then
+        Assert.assertTrue(((PublishableNewsViewer)news).getSubscribentContent().contains(incomingNews.elems().get(0).getContent()));
+        Assert.assertTrue(((PublishableNewsViewer)news).getSubscribentContent().contains(incomingNews.elems().get(1).getContent()));
+        Assert.assertTrue(((PublishableNewsViewer)news).getSubscribentContent().contains(incomingNews.elems().get(2).getContent()));
         Assert.assertTrue(((PublishableNewsViewer)news).getPublicContent().contains(incomingNews.elems().get(3).getContent()));
     }
 }
