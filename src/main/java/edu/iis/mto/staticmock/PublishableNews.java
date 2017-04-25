@@ -9,8 +9,8 @@ public class PublishableNews {
 		return new PublishableNews();
 	}
 
-	private final List<String> publicContent = new ArrayList<>();
-	private final List<String> subscribentContent = new ArrayList<>();
+	protected final List<String> publicContent = new ArrayList<>();
+	protected final List<String> subscribentContent = new ArrayList<>();
 
 	public void addPublicInfo(String content) {
 		this.publicContent .add(content);
