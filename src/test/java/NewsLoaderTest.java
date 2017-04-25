@@ -39,13 +39,10 @@ public class NewsLoaderTest {
     }
 
     @Test
-    public void validateSplittingNews() {
+    public void newsAsASubscriptionAIsInsertToSubscribentContentList() {
         // given
         NewsLoader newsLoader = new NewsLoader();
         incomingNews.add(new IncomingInfo("Test 1", SubsciptionType.A));
-        incomingNews.add(new IncomingInfo("Test 2", SubsciptionType.B));
-        incomingNews.add(new IncomingInfo("Test 3", SubsciptionType.C));
-        incomingNews.add(new IncomingInfo("Test 4", SubsciptionType.NONE));
 
         // when
         PublishableNews news = newsLoader.loadNews();
@@ -53,8 +50,47 @@ public class NewsLoaderTest {
 
         // then
         Assert.assertTrue(((PublishableNewsViewer)news).getSubscribentContent().contains(incomingNews.elems().get(0).getContent()));
-        Assert.assertTrue(((PublishableNewsViewer)news).getSubscribentContent().contains(incomingNews.elems().get(1).getContent()));
-        Assert.assertTrue(((PublishableNewsViewer)news).getSubscribentContent().contains(incomingNews.elems().get(2).getContent()));
-        Assert.assertTrue(((PublishableNewsViewer)news).getPublicContent().contains(incomingNews.elems().get(3).getContent()));
+    }
+
+    @Test
+    public void newsAsASubscriptionBIsInsertToSubscribentContentList() {
+        // given
+        NewsLoader newsLoader = new NewsLoader();
+        incomingNews.add(new IncomingInfo("Test 2", SubsciptionType.B));
+
+        // when
+        PublishableNews news = newsLoader.loadNews();
+        Assert.assertTrue(news.getClass().getName().equals(PublishableNewsViewer.class.getName()));
+
+        // then
+        Assert.assertTrue(((PublishableNewsViewer)news).getSubscribentContent().contains(incomingNews.elems().get(0).getContent()));
+    }
+
+    @Test
+    public void newsAsASubscriptionCIsInsertToSubscribentContentList() {
+        // given
+        NewsLoader newsLoader = new NewsLoader();
+        incomingNews.add(new IncomingInfo("Test 3", SubsciptionType.C));
+
+        // when
+        PublishableNews news = newsLoader.loadNews();
+        Assert.assertTrue(news.getClass().getName().equals(PublishableNewsViewer.class.getName()));
+
+        // then
+        Assert.assertTrue(((PublishableNewsViewer)news).getSubscribentContent().contains(incomingNews.elems().get(0).getContent()));
+    }
+
+    @Test
+    public void newsAsASubscriptionNoneIsInsertToPublicContentList() {
+        // given
+        NewsLoader newsLoader = new NewsLoader();
+        incomingNews.add(new IncomingInfo("Test 4", SubsciptionType.NONE));
+
+        // when
+        PublishableNews news = newsLoader.loadNews();
+        Assert.assertTrue(news.getClass().getName().equals(PublishableNewsViewer.class.getName()));
+
+        // then
+        Assert.assertTrue(((PublishableNewsViewer)news).getPublicContent().contains(incomingNews.elems().get(0).getContent()));
     }
 }
