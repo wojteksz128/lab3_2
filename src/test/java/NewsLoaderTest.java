@@ -47,7 +47,7 @@ public class NewsLoaderTest {
     }
 
     @Test
-    public void validateSplitingNews() {
+    public void validateSplittingNews() {
         // given
         NewsLoader newsLoader = new NewsLoader();
         incomingNews.add(new IncomingInfo("Test 1", SubsciptionType.A));
@@ -60,6 +60,6 @@ public class NewsLoaderTest {
         Assert.assertTrue(news.getClass().getName().equals(PublishableNewsViewer.class.getName()));
 
         // then
-        //Assert.assertThat(news.);
+        Assert.assertTrue(((PublishableNewsViewer)news).getPublicContent().contains(incomingNews.elems().get(3).getContent()));
     }
 }
